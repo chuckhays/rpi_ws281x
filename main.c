@@ -54,7 +54,7 @@
 #define DMA                                      5
 
 #define WIDTH                                    8
-#define HEIGHT                                   8
+#define HEIGHT                                   5
 #define LED_COUNT                                (WIDTH * HEIGHT)
 
 
@@ -70,6 +70,7 @@ ws2811_t ledstring =
             .count = LED_COUNT,
             .invert = 0,
             .brightness = 15,
+	    .strip_type = WS2811_STRIP_RGBW,
         },
         [1] =
         {
@@ -79,7 +80,6 @@ ws2811_t ledstring =
             .brightness = 0,
         },
     },
-    .strip_type = WS2811_STRIP_RGBW,
 };
 
 ws2811_led_t matrix[WIDTH][HEIGHT];
@@ -114,14 +114,15 @@ void matrix_raise(void)
 int dotspos[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 ws2811_led_t dotcolors[] =
 {
-    0xFF200000,  // red
-    0xFF201000,  // orange
-    0xFF202000,  // yellow
-    0xFF002000,  // green
-    0xFF002020,  // lightblue
-    0xFF000020,  // blue
-    0xFF100010,  // purple
-    0xFF200010,  // pink
+    0x200000,  // red
+    0x201000,  // orange
+    0xff000000,  // white
+    //0x202000,  // yellow
+    0x002000,  // green
+    0x002020,  // lightblue
+    0x000020,  // blue
+    0x100010,  // purple
+    0x200010,  // pink
 };
 
 void matrix_bottom(void)
@@ -136,8 +137,8 @@ void matrix_bottom(void)
             dotspos[i] = 0;
         }
 
-        //matrix[dotspos[i]][HEIGHT - 1] = dotcolors[i];
-        matrix[dotpos[i]][HEIGHT - 1] = 0x00FF0000;
+        matrix[dotspos[i]][HEIGHT - 1] = dotcolors[i];
+        //matrix[dotspos[i]][HEIGHT - 1] = 0x00FF0000;
     }
 }
 
@@ -170,7 +171,6 @@ int main(int argc, char *argv[])
 
     while (1)
     {
-      for (int i = i;)
         matrix_raise();
         matrix_bottom();
         matrix_render();
